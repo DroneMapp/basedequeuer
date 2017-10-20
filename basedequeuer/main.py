@@ -3,7 +3,7 @@ from signal import signal, SIGTERM, SIGHUP, SIGABRT
 import click
 import yaml
 
-from .basedequeuer import Dequeuer
+from .dequeuer import Dequeuer
 from . import settings
 
 
