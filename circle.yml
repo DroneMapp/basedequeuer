@@ -1,0 +1,23 @@
+machine:
+    python:
+        version: 3.6.2
+    environment:
+        AWS_ACCESS_KEY_ID: NONE
+        AWS_SECRET_ACCESS_KEY: NONE
+        AWS_REGION: none
+        TOKEN: THE_TOKEN
+
+dependencies:
+    pre:
+        - pip install -U -r requirements/test.txt
+
+test:
+    pre:
+      - flake8 -v --ignore=E501 dequeuer/
+
+    override:
+        - bin/run-tests.sh
+
+notify:
+    webhooks:
+        - url: https://discordapp.com/api/webhooks/293715585013907457/YQh5amBpv3pqkV_Z6x4W_ENp7239aIRwjKZUr5FGSbapN7FT6gl4n6QKXKe954FStI__
