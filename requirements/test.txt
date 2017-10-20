@@ -1,0 +1,10 @@
+-r production.txt
+factory-boy
+pytest
+pytest-cache
+pytest-cov
+pytest-timeout
+pytest-xdist
+vcrpy
+coverage
+flake8

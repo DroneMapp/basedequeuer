@@ -1,2 +1,3 @@
-# basedequeuer
-Base library for all dequeuers.
+# base dequeuer
+
+Base library for all Dequeuer incarnations.
