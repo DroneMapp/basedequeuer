@@ -1,19 +1,49 @@
+import re
+
+
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
-version = '0.0.4'
+version = '0.1.0'
 
-with open('requirements/production.txt') as requirements_file:
-    requires = [line.strip('\n') for line in requirements_file if bool(line.strip('\n'))]
+
+def pip_git_to_setuptools_git(url):
+    match = re.match(
+        r'git\+http://github.com/(?P<owner>[^/]+)/(?P<repository>[^/]+).git@(?P<tag>.+)',
+        url
+    )
+    if match:
+        group_dict = match.groupdict()
+        url = "git+http://git@github.com/{owner}/{repository}.git@{tag}#egg={repository}-{tag}".format(
+            **group_dict
+        )
+        package = '{repository}=={tag}'.format(**group_dict)
+    return package, url
+
+
+def parse_requirements():
+    requires = []
+    dependency_links = []
+
+    with open('requirements/production.txt') as requirements_file:
+        for line in requirements_file:
+            if 'git+' in line:
+                package, link = pip_git_to_setuptools_git(line.strip())
+                dependency_links.append(link)
+            else:
+                package = line.strip()
+            requires.append(package)
+
+    return {'install_requires': requires, 'dependency_links': dependency_links}
 
 
 with open('README.md') as f:
     readme = f.read()
 
 with open('LICENSE') as f:
-    license = f.read()
+    our_license = f.read()
 
 setup(
     name='Base Dequeuer',
@@ -23,12 +53,11 @@ setup(
     author='Cléber Zavadniak',
     author_email='cleberman@gmail.com',
     url='https://github.com/Dronemapp/basedequeuer',
-    license=license,
+    license=our_license,
     packages=['basedequeuer'],
     package_data={'': ['LICENSE', 'README.md']},
     package_dir={'basedequeuer': 'basedequeuer'},
     include_package_data=True,
-    install_requires=requires,
     zip_safe=False,
     keywords='generic libraries',
     classifiers=(
@@ -39,4 +68,5 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ),
+    **parse_requirements()
 )
