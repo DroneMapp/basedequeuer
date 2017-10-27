@@ -6,7 +6,8 @@ except ImportError:
 version = '0.0.4'
 
 with open('requirements/production.txt') as requirements_file:
-    requires = [line for line in requirements_file if 'https://' not in requirements_file]
+    requires = [line.strip('\n') for line in requirements_file if bool(line.strip('\n'))]
+
 
 with open('README.md') as f:
     readme = f.read()
