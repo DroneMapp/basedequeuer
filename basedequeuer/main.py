@@ -30,7 +30,7 @@ def run(dequeuer, max_messages):
 
 @click.command()
 @click.option('--max-messages', default=0)
-def main(max_messages):
+def main(max_messages=0):
     with open(settings.CONFIG_FILE_PATH) as config_file:
         cfg = yaml.load(config_file)
 
