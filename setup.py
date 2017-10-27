@@ -11,12 +11,12 @@ version = '0.1.0'
 
 def pip_git_to_setuptools_git(url):
     match = re.match(
-        r'git\+http://github.com/(?P<owner>[^/]+)/(?P<repository>[^/]+).git@(?P<tag>.+)',
+        r'git\+https://github.com/(?P<owner>[^/]+)/(?P<repository>[^/]+).git@(?P<tag>.+)',
         url
     )
     if match:
         group_dict = match.groupdict()
-        url = "git+http://git@github.com/{owner}/{repository}.git@{tag}#egg={repository}-{tag}".format(
+        url = "git+https://git@github.com/{owner}/{repository}.git@{tag}#egg={repository}-{tag}".format(
             **group_dict
         )
         package = '{repository}=={tag}'.format(**group_dict)
