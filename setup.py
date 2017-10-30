@@ -3,7 +3,7 @@ try:
 except ImportError:
     from distutils.core import setup
 
-version = '0.0.4'
+version = '0.0.5'
 
 with open('requirements/production.txt') as requirements_file:
     requires = [line for line in requirements_file if 'https://' not in requirements_file]
