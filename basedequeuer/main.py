@@ -1,6 +1,5 @@
 from signal import signal, SIGTERM, SIGHUP, SIGABRT
 
-import click
 import yaml
 
 from .dequeuer import Dequeuer
@@ -28,13 +27,14 @@ def run(dequeuer, max_messages):
             break
 
 
-@click.command()
-@click.option('--max-messages', default=0)
-def main(max_messages=0):
+def main(max_messages=0, custom_dequeuer=None):
     with open(settings.CONFIG_FILE_PATH) as config_file:
         cfg = yaml.load(config_file)
 
-    d = Dequeuer(cfg, settings.QUEUE_NAME)
+    try:
+        d = custom_dequeuer(cfg, settings.QUEUE_NAME)
+    except TypeError:
+        d = Dequeuer(cfg, settings.QUEUE_NAME)
     bind_signals(d)
 
     try:
