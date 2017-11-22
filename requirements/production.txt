@@ -2,4 +2,4 @@ requests==2.18.4
 PyYAML==3.12
 prettyconf==1.2.3
 
-git+https://github.com/DroneMapp/powerlibs-aws-sqs-dequeue_to_api.git@0.9.1
+git+https://github.com/DroneMapp/powerlibs-aws-sqs-dequeue_to_api.git@0.10.0
